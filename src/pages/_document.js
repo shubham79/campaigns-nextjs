@@ -24,7 +24,7 @@ class MyDocument extends Document {
             html {
               margin: 0;
               padding: 0;
-              font-family: 'Inter';
+              font-family: 'Roboto';
             }
           `}
         />
@@ -36,6 +36,7 @@ class MyDocument extends Document {
           <link rel="manifest" href="/static/favicon/site.webmanifest" />
           <link rel="mask-icon" href="/static/favicon/safari-pinned-tab.svg" color="#000000" />
           <link rel="shortcut icon" href="/static/favicon/favicon.png" />
+          <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
           <meta name="msapplication-config" content="/static/favicon/browserconfig.xml" />
           <meta name="theme-color" content="#000" />
         </Head>
