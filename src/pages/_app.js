@@ -32,4 +32,4 @@ class Srr extends App {
   }
 }
 
-export default appWithTranslation(withReduxStore(Srr));
+export default withReduxStore(Srr);

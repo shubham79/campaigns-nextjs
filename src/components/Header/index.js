@@ -54,9 +54,9 @@ export function Header({ t }) {
         <NavRoot>
           <Logo></Logo>
           <Space />
-          <ListActions>
+          {/* <ListActions>
             <SelectLanguages t={t} />
-          </ListActions>
+          </ListActions> */}
         </NavRoot>
       </HeaderContainer>
     </HeaderRoot>

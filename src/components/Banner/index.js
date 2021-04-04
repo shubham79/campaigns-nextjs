@@ -23,7 +23,7 @@ const Title = styled('h1')`
 export function Banner({ t }) {
   return (
     <BannerRoot>
-      <Title>{t('title')}</Title>
+      <Title>{`Manage Campaigns`}</Title>
     </BannerRoot>
   );
 }

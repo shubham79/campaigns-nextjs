@@ -124,9 +124,9 @@ export function Features({ t }) {
         <FeaturesListContainer>
           <Paper className={classes.root} style={{ marginBottom: '20px' }}>
             <StyledTabs value={value} onChange={handleChange}>
-              <StyledTab label={t('features.tab1')} />
-              <StyledTab label={t('features.tab2')} />
-              <StyledTab label={t('features.tab3')} />
+              <StyledTab label="Upcoming Campaigns" />
+              <StyledTab label="Live Campaigns" />
+              <StyledTab label="Past Campaigns" />
             </StyledTabs>
           </Paper>
           <SwipeableViews
