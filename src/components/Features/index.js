@@ -42,7 +42,7 @@ const StyledTabs = withStyles({
       color: '#83A515',
     },
   },
-})(props => <Tabs {...props} indicatorColor={'#83A515'} TabIndicatorProps={{ style: { background: '#83A515' } }} />);
+})(props => <Tabs {...props} TabIndicatorProps={{ style: { background: '#83A515' } }} />);
 
 const StyledTab = withStyles(theme => ({
   root: {
