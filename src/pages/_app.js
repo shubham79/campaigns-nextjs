@@ -6,6 +6,9 @@ import App from 'next/app';
 
 import withReduxStore from 'utils/with-redux-store';
 import { appWithTranslation } from 'utils/with-i18next';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+
+import MomentUtils from '@date-io/moment';
 
 import 'fontsource-metropolis';
 import '@typefaces-pack/typeface-inter';
@@ -14,15 +17,17 @@ class Srr extends App {
   render() {
     const { Component, pageProps, reduxStore } = this.props;
     return (
-      <React.StrictMode>
+      <>
         <Head>
           <title>React Next Boilerplate</title>
         </Head>
 
         <Provider store={reduxStore}>
-          <Component {...pageProps} />
+          <MuiPickersUtilsProvider utils={MomentUtils}>
+            <Component {...pageProps} />
+          </MuiPickersUtilsProvider>
         </Provider>
-      </React.StrictMode>
+      </>
     );
   }
 }
