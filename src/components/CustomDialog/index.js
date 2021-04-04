@@ -20,49 +20,70 @@ const PricingListContainer = styled('div')`
 const PricingItem = styled('div')`
   display: flex;
   flex-direction: row;
-  width: 500px;
   justify-content: space-between;
   margin-bottom: 22px;
 `;
 
+const Actiontext = styled('span')`
+  font-size: 16px;
+  color: #2b416c;
+`;
+const ActionSubtext = styled('span')`
+  font-size: 14px;
+  color: #9ca2b7;
+`;
+
+const Pricingtext = styled('span')`
+  font-size: 16px;
+  color: #7788a3;
+`;
+
+const Pricing = styled('span')`
+  font-size: 16px;
+  text-align: right;
+  color: #556789;
+`;
+
 const StyledButton = withStyles(() => ({
   root: {
-    border: '1px solid black',
-    color: 'black',
-    fontSize: '12px',
+    border: ' 2px solid #181B34',
+    color: ' #181B34',
+    fontSize: '16px',
     fontWeight: 'bold',
     textTransform: 'capitalize',
+    width: '84px',
+    height: '48px',
   },
 }))(Button);
 
 export default function CustomDialog({ open, handleClose, campaign = {} }) {
   const { name, region, image_url } = campaign;
   const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
   return (
     <Dialog fullScreen={fullScreen} open={open} onClose={handleClose} aria-labelledby="responsive-dialog-title">
-      <DialogContent>
+      <DialogContent style={{ width: '400px' }}>
         <div style={{ display: 'flex', marginBottom: '20px' }}>
-          <img src={image_url} style={{ height: '150px' }}></img>
+          <img src={image_url} style={{ height: '137px' }}></img>
           <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', marginLeft: '10px' }}>
-            <span>{name}</span>
-            <span>{region}</span>
+            <Actiontext>{name}</Actiontext>
+            <ActionSubtext>{region}</ActionSubtext>
           </div>
         </div>
-        <p> Pricing </p>
+        <p style={{ color: '#2B416C', fontSize: '24px', fontWeight: '700' }}> Pricing </p>
         <PricingListContainer>
           <PricingList>
             <PricingItem>
-              <span>1 week - 1 month</span>
-              <span>$ 100.00</span>
+              <Pricingtext>1 week - 1 month</Pricingtext>
+              <Pricing>$ 100.00</Pricing>
             </PricingItem>
             <PricingItem>
-              <span>6 months</span>
-              <span>$ 500.00</span>
+              <Pricingtext>6 months</Pricingtext>
+              <Pricing>$ 500.00</Pricing>
             </PricingItem>
             <PricingItem>
-              <span>1 year</span>
-              <span>$ 900.00</span>
+              <Pricingtext>1 year</Pricingtext>
+              <Pricing>$ 900.00</Pricing>
             </PricingItem>
           </PricingList>
         </PricingListContainer>
