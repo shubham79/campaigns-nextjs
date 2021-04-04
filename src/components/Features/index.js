@@ -1,14 +1,81 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import SwipeableViews from 'react-swipeable-views';
 import styled from '@emotion/styled';
+import { makeStyles, useTheme, withStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
+
+import TableContainer from '@material-ui/core/TableContainer';
 
 import { withTranslation } from 'utils/with-i18next';
+import CustomDialog from 'components/CustomDialog';
+
+import CustomTable from 'components/CustomTable';
+
+const useStyles = makeStyles({
+  root: {
+    flexGrow: 1,
+  },
+});
+
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`full-width-tabpanel-${index}`}
+      aria-labelledby={`full-width-tab-${index}`}
+      {...other}>
+      {value === index && (
+        <Box p={3}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+const StyledTabs = withStyles({
+  indicator: {
+    display: 'flex',
+    backgroundColor: '#83A515',
+    color: '#83A515',
+    '& > span': {
+      maxWidth: 40,
+      width: '100%',
+      color: '#83A515',
+    },
+  },
+})(props => <Tabs {...props} indicatorColor={'#83A515'} TabIndicatorProps={{ style: { background: '#83A515' } }} />);
+
+const StyledTab = withStyles(theme => ({
+  root: {
+    textTransform: 'none',
+    color: '#556789',
+    fontWeight: theme.typography.fontWeightRegular,
+    fontSize: '18px',
+    marginRight: theme.spacing(1),
+    '&:focus': {
+      opacity: 1,
+      color: '#83A515',
+    },
+    '&$selected': {
+      color: '#83A515',
+      fontWeight: 500,
+    },
+  },
+}))(props => <Tab disableRipple {...props} />);
 
 const Container = styled('div')`
   width: 100%;
   margin: 0 auto;
-  padding: 6rem 1rem;
+  //padding: 6rem 1rem;
   max-width: 1024px;
 `;
 
@@ -18,103 +85,73 @@ const FeaturesRoot = styled('div')`
   grid-gap: 27.136px;
 `;
 
-const FeaturesList = styled('div')`
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-around;
-`;
-
 const FeaturesListContainer = styled('div')`
   grid-column: 1 / span 12;
 `;
 
-const FeatureItem = styled('div')`
-  display: flex;
-  flex-direction: column;
-  width: 300px;
-  margin-bottom: 72px;
-`;
-
-const Title = styled('h3')`
-  font-size: 20px;
-  font-family: 'Metropolis';
-  font-weight: 600;
-  margin: 0;
-`;
-
-const Content = styled('p')`
-  line-height: 1.65;
-  font-weight: 400;
-`;
-
 export function Features({ t }) {
+  const theme = useTheme();
+  const classes = useStyles();
+  const [value, setValue] = React.useState(0);
+  const [open, setOpen] = React.useState(false);
+  const [currentCampaign, setcurrentCampaign] = React.useState({});
+  const [selectedDate, handleDateChange] = React.useState(new Date());
+
+  const [isOpen, setIsOpen] = React.useState(false);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  const handleChangeIndex = index => {
+    setValue(index);
+  };
+
+  /**
+   * Modal Dialog open handler
+   */
+  const handleClickOpen = campaign => {
+    setcurrentCampaign(campaign);
+    setOpen(true);
+  };
+
+  /**
+   * Modal Dialog close handler
+   */
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <Container id="features">
       <FeaturesRoot>
         <FeaturesListContainer>
-          <FeaturesList>
-            <FeatureItem>
-              <Title>SEO</Title>
-
-              <Content>{t('features.seo')}</Content>
-            </FeatureItem>
-
-            <FeatureItem>
-              <Title>redux-saga</Title>
-
-              <Content>{t('features.reduxSaga')}</Content>
-            </FeatureItem>
-
-            <FeatureItem>
-              <Title>next-i18next</Title>
-
-              <Content>{t('features.nextI18next')}</Content>
-            </FeatureItem>
-
-            <FeatureItem>
-              <Title>i18next</Title>
-
-              <Content>{t('features.i18next')}</Content>
-            </FeatureItem>
-
-            <FeatureItem>
-              <Title>redux</Title>
-
-              <Content>{t('features.redux')}</Content>
-            </FeatureItem>
-
-            <FeatureItem>
-              <Title>reselect</Title>
-
-              <Content>{t('features.reselect')}</Content>
-            </FeatureItem>
-
-            <FeatureItem>
-              <Title>Immer</Title>
-
-              <Content>{t('features.immer')}</Content>
-            </FeatureItem>
-
-            <FeatureItem>
-              <Title>@testing-library/react</Title>
-
-              <Content>{t('features.testingLibraryReact')}</Content>
-            </FeatureItem>
-
-            <FeatureItem>
-              <Title>Typefaces</Title>
-
-              <Content>{t('features.typefaces')}</Content>
-            </FeatureItem>
-
-            <FeatureItem>
-              <Title>Emotion</Title>
-
-              <Content>{t('features.emotion')}</Content>
-            </FeatureItem>
-          </FeaturesList>
+          <Paper className={classes.root} style={{ marginBottom: '20px' }}>
+            <StyledTabs value={value} onChange={handleChange}>
+              <StyledTab label="Upcoming Campaigns" />
+              <StyledTab label="Live Campaigns" />
+              <StyledTab label="Past Campaigns" />
+            </StyledTabs>
+          </Paper>
+          <SwipeableViews
+            axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+            index={value}
+            onChangeIndex={handleChangeIndex}>
+            <TabPanel value={value} index={0} dir={theme.direction}>
+              <TableContainer component={Paper}>
+                <CustomTable handleClickOpen={handleClickOpen}></CustomTable>
+              </TableContainer>
+            </TabPanel>
+            <TabPanel value={value} index={1} dir={theme.direction}>
+              <CustomTable handleClickOpen={handleClickOpen}></CustomTable>
+            </TabPanel>
+            <TabPanel value={value} index={2} dir={theme.direction}>
+              <CustomTable handleClickOpen={handleClickOpen}></CustomTable>
+            </TabPanel>
+          </SwipeableViews>
         </FeaturesListContainer>
       </FeaturesRoot>
+      <CustomDialog open={open} handleClose={handleClose} campaign={currentCampaign}></CustomDialog>
     </Container>
   );
 }
