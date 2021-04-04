@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import SwipeableViews from 'react-swipeable-views';
 import styled from '@emotion/styled';
@@ -6,14 +6,9 @@ import { makeStyles, useTheme, withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-
 import TableContainer from '@material-ui/core/TableContainer';
-
 import { withTranslation } from 'utils/with-i18next';
 import CustomDialog from 'components/CustomDialog';
-
 import CustomTable from 'components/CustomTable';
 
 const useStyles = makeStyles({
@@ -22,26 +17,21 @@ const useStyles = makeStyles({
   },
 });
 
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
+const Container = styled('div')`
+  width: 100%;
+  margin: 0 auto;
+  //padding: 6rem 1rem;
+  max-width: 1024px;
+`;
 
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`full-width-tabpanel-${index}`}
-      aria-labelledby={`full-width-tab-${index}`}
-      {...other}>
-      {value === index && (
-        <Box p={3}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
+const FeaturesListContainer = styled('div')`
+  grid-column: 1 / span 12;
+`;
 
 const StyledTabs = withStyles({
+  root: {
+    overflow: 'scroll',
+  },
   indicator: {
     display: 'flex',
     backgroundColor: '#83A515',
@@ -72,32 +62,38 @@ const StyledTab = withStyles(theme => ({
   },
 }))(props => <Tab disableRipple {...props} />);
 
-const Container = styled('div')`
-  width: 100%;
-  margin: 0 auto;
-  //padding: 6rem 1rem;
-  max-width: 1024px;
-`;
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
 
-const FeaturesRoot = styled('div')`
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  grid-gap: 27.136px;
-`;
-
-const FeaturesListContainer = styled('div')`
-  grid-column: 1 / span 12;
-`;
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`full-width-tabpanel-${index}`}
+      aria-labelledby={`full-width-tab-${index}`}
+      {...other}>
+      {value === index && (
+        <>
+          <>{children}</>
+        </>
+      )}
+    </div>
+  );
+}
 
 export function Features({ t }) {
   const theme = useTheme();
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = React.useState(1);
   const [open, setOpen] = React.useState(false);
   const [currentCampaign, setcurrentCampaign] = React.useState({});
   const [selectedDate, handleDateChange] = React.useState(new Date());
 
   const [isOpen, setIsOpen] = React.useState(false);
+
+  useEffect(() => {
+    setValue(0);
+  }, []);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -124,7 +120,7 @@ export function Features({ t }) {
 
   return (
     <Container id="features">
-      <FeaturesRoot>
+      <>
         <FeaturesListContainer>
           <Paper className={classes.root} style={{ marginBottom: '20px' }}>
             <StyledTabs value={value} onChange={handleChange}>
@@ -150,7 +146,7 @@ export function Features({ t }) {
             </TabPanel>
           </SwipeableViews>
         </FeaturesListContainer>
-      </FeaturesRoot>
+      </>
       <CustomDialog open={open} handleClose={handleClose} campaign={currentCampaign}></CustomDialog>
     </Container>
   );
