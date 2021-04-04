@@ -42,11 +42,8 @@ const Space = styled('div')`
 `;
 
 const Logo = styled('div')`
-  position: absolute;
   width: 147px;
   height: 45px;
-  left: 182px;
-  top: 17px;
   background: url('/static/images/logo.png');
 `;
 
