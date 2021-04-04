@@ -11,14 +11,14 @@ import CustomLink from './CustomLink';
 const HeaderRoot = styled(`header`)`
   left: 0;
   width: 100%;
-  height: 64px;
+  height: 80px;
   position: sticky;
   top: 0px;
   z-index: 1000;
 `;
 
 const HeaderContainer = styled('div')`
-  background: rgba(255, 255, 255, 0.98);
+  background: #1f2640;
   box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.06);
 `;
 
@@ -29,12 +29,8 @@ const NavRoot = styled('nav')`
   width: 100%;
   margin: 0 auto;
   padding: 0 16px;
-  height: 64px;
+  height: 80px;
   max-width: 1024px;
-`;
-
-const ListItem = styled('div')`
-  display: flex;
 `;
 
 const ListActions = styled('div')`
@@ -45,18 +41,22 @@ const Space = styled('div')`
   flex: 1 1 auto;
 `;
 
+const Logo = styled('div')`
+  position: absolute;
+  width: 147px;
+  height: 45px;
+  left: 182px;
+  top: 17px;
+  background: url('/static/images/logo.png');
+`;
+
 export function Header({ t }) {
   return (
     <HeaderRoot>
       <HeaderContainer>
         <NavRoot>
-          <ListItem>
-            <CustomLink href={'#features'} name={t('phrases.features')} />
-            <CustomLink href={'#exampleGetApi'} name={t('phrases.apiExample')} />
-          </ListItem>
-
+          <Logo></Logo>
           <Space />
-
           <ListActions>
             <SelectLanguages t={t} />
           </ListActions>
