@@ -1,5 +1,5 @@
 import React from 'react';
-
+import PropTypes from 'prop-types';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -96,3 +96,9 @@ export default function CustomDialog({ open, handleClose, campaign = {} }) {
     </Dialog>
   );
 }
+
+CustomDialog.propTypes = {
+  open: PropTypes.bool,
+  handleClose: PropTypes.func,
+  campaign: PropTypes.object,
+};

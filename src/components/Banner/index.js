@@ -4,8 +4,6 @@ import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import { useTranslation } from 'next-i18next';
 
-// import { withTranslation } from 'utils/with-i18next';
-
 const BannerRoot = styled('div')`
   display: flex;
   flex-direction: column;

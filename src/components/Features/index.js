@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import SwipeableViews from 'react-swipeable-views';
 import styled from '@emotion/styled';
@@ -63,6 +63,11 @@ const StyledTab = withStyles(theme => ({
   },
 }))(props => <Tab disableRipple {...props} />);
 
+/**
+ * Custome Material TabPanel
+ * @param {Object} TabPanelProps
+ * @returns
+ */
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -86,12 +91,9 @@ export function Features({ tableData, setTableData }) {
   const theme = useTheme();
   const classes = useStyles();
   const { t } = useTranslation('features');
-  const [value, setValue] = React.useState(1);
-  const [open, setOpen] = React.useState(false);
-  const [currentCampaign, setcurrentCampaign] = React.useState({});
-  const [selectedDate, handleDateChange] = React.useState(new Date());
-
-  const [isOpen, setIsOpen] = React.useState(false);
+  const [value, setValue] = useState(1);
+  const [open, setOpen] = useState(false);
+  const [currentCampaign, setcurrentCampaign] = useState({});
 
   useEffect(() => {
     setValue(0);
@@ -120,14 +122,26 @@ export function Features({ tableData, setTableData }) {
     setOpen(false);
   };
 
+  /**
+   *
+   * @returns LiveCampaign TableData array
+   */
   function getLiveCampaignTableData() {
     return tableData.filter(data => moment(data.createdOn).diff(moment(), 'days') === 0);
   }
 
+  /**
+   *
+   * @returns UpcomingCampaign TableData array
+   */
   function getUpcomingCampaignTableData() {
     return tableData.filter(data => moment(data.createdOn).diff(moment(), 'days') > 0);
   }
 
+  /**
+   *
+   * @returns PastCampaign TableData array
+   */
   function getPastCampaignTableData() {
     return tableData.filter(data => moment(data.createdOn).diff(moment(), 'days') < 0);
   }
@@ -177,7 +191,8 @@ export function Features({ tableData, setTableData }) {
 }
 
 Features.propTypes = {
-  t: PropTypes.func,
+  tableData: PropTypes.array,
+  setTableData: PropTypes.func,
 };
 
 export default Features;

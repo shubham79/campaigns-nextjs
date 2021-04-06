@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import Header from 'components/Header';
 import Banner from 'components/Banner';
-import Footer from 'components/Footer';
 import styled from '@emotion/styled';
 
 const MainRoot = styled('main')`
@@ -21,7 +19,6 @@ function Layout({ children }) {
         <Banner />
         {children}
       </MainRoot>
-      {/* <Footer /> */}
     </>
   );
 }

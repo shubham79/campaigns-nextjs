@@ -1,20 +1,15 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { withStyles, makeStyles } from '@material-ui/core';
 import moment from 'moment';
 import { calculateTimeDiff } from 'utils/helpers';
-// import { tableData } from 'utils/constants';
 import styled from '@emotion/styled';
-
 import DatePicker from 'react-datepicker';
-
 import 'react-datepicker/dist/react-datepicker.css';
 
 const actions = [
@@ -27,7 +22,6 @@ const CustomLink = styled('span')`
   width: 100%;
   text-decoration: none;
   cursor: pointer;
-  //color: #09d3ac;
 
   &:hover {
     text-decoration: underline;
@@ -55,7 +49,6 @@ const StyledTableHead = withStyles(() => ({
 
 const StyledTableHeaderCell = withStyles(() => ({
   head: {
-    //backgroundColor: theme.palette.common.black,
     color: '#556789',
     'text-transform': 'uppercase',
   },
@@ -181,3 +174,9 @@ export default function CustomTable({ handleClickOpen, tableData, setTableData }
     </Table>
   );
 }
+
+CustomTable.propTypes = {
+  tableData: PropTypes.array,
+  setTableData: PropTypes.func,
+  handleClickOpen: PropTypes.func,
+};

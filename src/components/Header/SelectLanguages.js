@@ -4,8 +4,6 @@ import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 
-// import { i18n } from 'utils/with-i18next';
-
 const SelectRoot = styled('select')`
   border-radius: 4px;
   width: 100px;
