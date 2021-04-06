@@ -1,34 +1,20 @@
 import produce from 'immer';
+import { tableData } from 'utils/constants';
 
-import { getShowcases } from './actions';
+import { setTableData } from './actions';
 
 export const initialState = {
   loading: false,
   fetched: false,
   error: null,
-  showcases: [],
+  tableData: tableData,
 };
 
 const showcasesReducer = (state = initialState, { type, payload }) =>
   produce(state, draft => {
     switch (type) {
-      case getShowcases.REQUEST:
-        draft.loading = true;
-
-        break;
-
-      case getShowcases.SUCCESS:
-        draft.loading = false;
-        draft.fetched = true;
-        draft.showcases = payload.data;
-
-        break;
-
-      case getShowcases.FAILURE:
-        draft.loading = false;
-        draft.fetched = false;
-        draft.error = payload;
-
+      case setTableData.SUCCESS:
+        draft.tableData[payload.index].createdOn = payload.data;
         break;
     }
   });

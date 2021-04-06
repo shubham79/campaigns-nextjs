@@ -13,33 +13,38 @@ import Features from 'components/Features';
 
 import saga from './saga';
 import reducer from './reducer';
-import { getShowcases } from './actions';
-import { selectShowcases } from './selectors';
+import { setTableData } from './actions';
+import { selectShowcases, selectTableData } from './selectors';
 
-export function Home({ getShowcases, showcasesData }) {
+export function Home({ tableData, setTableData }) {
   useInjectSaga({ key: 'showcases', saga });
   useInjectReducer({ key: 'showcases', reducer });
 
   return (
     <Layout>
-      <Features />
+      <Features tableData={tableData} setTableData={setTableData} />
     </Layout>
   );
 }
 
 const mapStateToProps = createStructuredSelector({
   showcasesData: selectShowcases(),
+  tableData: selectTableData(),
 });
 
 export function mapDispatchToProps(dispatch) {
-  return { getShowcases: () => dispatch(getShowcases()) };
+  return {
+    setTableData: data => {
+      dispatch(setTableData(data));
+    },
+  };
 }
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 Home.propTypes = {
-  showcasesData: PropTypes.object,
-  getShowcases: PropTypes.func,
+  tableData: PropTypes.array,
+  setTableData: PropTypes.func,
 };
 
 export default compose(withConnect, memo)(Home);

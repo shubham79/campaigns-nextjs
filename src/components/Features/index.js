@@ -81,7 +81,7 @@ function TabPanel(props) {
   );
 }
 
-export function Features() {
+export function Features({ tableData, setTableData }) {
   const theme = useTheme();
   const classes = useStyles();
   const { t } = useTranslation('features');
@@ -131,19 +131,29 @@ export function Features() {
             </StyledTabs>
           </Paper>
           <SwipeableViews
+            style={{ overflow: 'visible' }}
             axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
             index={value}
             onChangeIndex={handleChangeIndex}>
             <TabPanel value={value} index={0} dir={theme.direction}>
               <TableContainer component={Paper}>
-                <CustomTable handleClickOpen={handleClickOpen}></CustomTable>
+                <CustomTable
+                  handleClickOpen={handleClickOpen}
+                  tableData={tableData}
+                  setTableData={setTableData}></CustomTable>
               </TableContainer>
             </TabPanel>
             <TabPanel value={value} index={1} dir={theme.direction}>
-              <CustomTable handleClickOpen={handleClickOpen}></CustomTable>
+              <CustomTable
+                handleClickOpen={handleClickOpen}
+                tableData={tableData}
+                setTableData={setTableData}></CustomTable>
             </TabPanel>
             <TabPanel value={value} index={2} dir={theme.direction}>
-              <CustomTable handleClickOpen={handleClickOpen}></CustomTable>
+              <CustomTable
+                handleClickOpen={handleClickOpen}
+                tableData={tableData}
+                setTableData={setTableData}></CustomTable>
             </TabPanel>
           </SwipeableViews>
         </FeaturesListContainer>

@@ -1,5 +1,5 @@
 import { createRoutine } from 'redux-saga-routines';
 
-import { GET_SHOWCASES } from './constants';
+import { SET_TABLEDATA } from './constants';
 
-export const getShowcases = createRoutine(GET_SHOWCASES);
+export const setTableData = createRoutine(SET_TABLEDATA);
