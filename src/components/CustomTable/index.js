@@ -79,7 +79,7 @@ const Actiontext = styled('span')`
 export default function CustomTable({ handleClickOpen, tableData, setTableData }) {
   // const theme = useTheme();
   const classes = useStyles();
-  const [isOpen, setIsOpen] = useState([false, false, false]);
+  const [isOpen, setIsOpen] = useState([false, false, false, false]);
 
   /**
    * @description Function to handle Date picker date changes and update Store via dispatching action
