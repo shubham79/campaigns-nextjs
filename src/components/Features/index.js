@@ -10,6 +10,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import CustomDialog from 'components/CustomDialog';
 import CustomTable from 'components/CustomTable';
 import { useTranslation } from 'next-i18next';
+import moment from 'moment';
 
 const useStyles = makeStyles({
   root: {
@@ -119,6 +120,18 @@ export function Features({ tableData, setTableData }) {
     setOpen(false);
   };
 
+  function getLiveCampaignTableData() {
+    return tableData.filter(data => moment(data.createdOn).diff(moment(), 'days') === 0);
+  }
+
+  function getUpcomingCampaignTableData() {
+    return tableData.filter(data => moment(data.createdOn).diff(moment(), 'days') > 0);
+  }
+
+  function getPastCampaignTableData() {
+    return tableData.filter(data => moment(data.createdOn).diff(moment(), 'days') < 0);
+  }
+
   return (
     <Container id="features">
       <>
@@ -139,20 +152,20 @@ export function Features({ tableData, setTableData }) {
               <TableContainer component={Paper}>
                 <CustomTable
                   handleClickOpen={handleClickOpen}
-                  tableData={tableData}
+                  tableData={getUpcomingCampaignTableData()}
                   setTableData={setTableData}></CustomTable>
               </TableContainer>
             </TabPanel>
             <TabPanel value={value} index={1} dir={theme.direction}>
               <CustomTable
                 handleClickOpen={handleClickOpen}
-                tableData={tableData}
+                tableData={getLiveCampaignTableData()}
                 setTableData={setTableData}></CustomTable>
             </TabPanel>
             <TabPanel value={value} index={2} dir={theme.direction}>
               <CustomTable
                 handleClickOpen={handleClickOpen}
-                tableData={tableData}
+                tableData={getPastCampaignTableData()}
                 setTableData={setTableData}></CustomTable>
             </TabPanel>
           </SwipeableViews>
