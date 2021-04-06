@@ -27,7 +27,7 @@ export const tableData = [
     id: 2,
     name: 'Mole Slayer',
     region: 'FR',
-    createdOn: 1559806711124,
+    createdOn: 1617177314000,
     price: 'Price info of Mole Slayer',
     csv: 'Some CSV link for Mole Slayer',
     report: 'Some report link for Mole Slayer',
