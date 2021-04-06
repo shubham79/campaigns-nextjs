@@ -7,9 +7,9 @@ import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import TableContainer from '@material-ui/core/TableContainer';
-import { withTranslation } from 'utils/with-i18next';
 import CustomDialog from 'components/CustomDialog';
 import CustomTable from 'components/CustomTable';
+import { useTranslation } from 'next-i18next';
 
 const useStyles = makeStyles({
   root: {
@@ -81,9 +81,10 @@ function TabPanel(props) {
   );
 }
 
-export function Features({ t }) {
+export function Features() {
   const theme = useTheme();
   const classes = useStyles();
+  const { t } = useTranslation('features');
   const [value, setValue] = React.useState(1);
   const [open, setOpen] = React.useState(false);
   const [currentCampaign, setcurrentCampaign] = React.useState({});
@@ -124,9 +125,9 @@ export function Features({ t }) {
         <FeaturesListContainer>
           <Paper className={classes.root} style={{ marginBottom: '20px' }}>
             <StyledTabs value={value} onChange={handleChange}>
-              <StyledTab label="Upcoming Campaigns" />
-              <StyledTab label="Live Campaigns" />
-              <StyledTab label="Past Campaigns" />
+              <StyledTab label={t('features.tab1')} />
+              <StyledTab label={t('features.tab2')} />
+              <StyledTab label={t('features.tab3')} />
             </StyledTabs>
           </Paper>
           <SwipeableViews
@@ -156,4 +157,4 @@ Features.propTypes = {
   t: PropTypes.func,
 };
 
-export default withTranslation('features')(Features);
+export default Features;

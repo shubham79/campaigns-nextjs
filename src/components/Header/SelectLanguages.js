@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import styled from '@emotion/styled';
+import { useRouter } from 'next/router';
 
-import { i18n } from 'utils/with-i18next';
+// import { i18n } from 'utils/with-i18next';
 
 const SelectRoot = styled('select')`
   border-radius: 4px;
@@ -12,23 +13,24 @@ const SelectRoot = styled('select')`
   border: solid #adb7c4 1px;
 `;
 
-export function SelectLanguages({ t }) {
-  const [select, setSelect] = useState(i18n.language);
+export function SelectLanguages() {
+  const router = useRouter();
+  const { locale } = router;
+  const [select, setSelect] = useState(locale);
 
   useEffect(() => {
-    i18n.changeLanguage(select);
+    router.push('/', '/', { locale: select });
   }, [select]);
 
   const handleSelect = ev => {
     ev.preventDefault();
-
     setSelect(ev.target.value);
   };
 
   return (
     <SelectRoot name="languages" id="languages" value={select} onChange={handleSelect}>
-      <option value="es">{t('languages.es')}</option>
-      <option value="en">{t('languages.en')}</option>
+      <option value="es">Spanish</option>
+      <option value="en">English</option>
     </SelectRoot>
   );
 }
