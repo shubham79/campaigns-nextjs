@@ -14,7 +14,7 @@ const showcasesReducer = (state = initialState, { type, payload }) =>
   produce(state, draft => {
     switch (type) {
       case setTableData.SUCCESS:
-        draft.tableData[payload.index].createdOn = payload.data;
+        draft.tableData[payload.id].createdOn = payload.data;
         break;
     }
   });

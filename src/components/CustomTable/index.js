@@ -91,11 +91,11 @@ export default function CustomTable({ handleClickOpen, tableData, setTableData }
   /**
    * @description Function to handle Date picker date changes and update Store via dispatching action
    * @param {Date} date
-   * @param {Number} index
+   * @param {Number} id
    */
-  function handleDateChange(date, index) {
+  function handleDateChange(date, id) {
     const seconds = date.getTime();
-    setTableData({ data: seconds, index });
+    setTableData({ data: seconds, id });
   }
 
   return (
@@ -162,7 +162,7 @@ export default function CustomTable({ handleClickOpen, tableData, setTableData }
                     {actionItem.actionName === 'Schedule Again' && isOpen[index] && (
                       <DatePicker
                         selected={new Date(row.createdOn)}
-                        onChange={date => handleDateChange(date, index)}
+                        onChange={date => handleDateChange(date, row.id)}
                         onClickOutside={() => {
                           let temp = [...isOpen];
                           temp[index] = false;
