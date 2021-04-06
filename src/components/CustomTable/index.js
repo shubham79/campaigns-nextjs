@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import Table from '@material-ui/core/Table';
@@ -10,8 +10,12 @@ import TableRow from '@material-ui/core/TableRow';
 import { withStyles, makeStyles } from '@material-ui/core';
 import moment from 'moment';
 import { calculateTimeDiff } from 'utils/helpers';
-import { tableData } from 'utils/constants';
+// import { tableData } from 'utils/constants';
 import styled from '@emotion/styled';
+
+import DatePicker from 'react-datepicker';
+
+import 'react-datepicker/dist/react-datepicker.css';
 
 const actions = [
   { actionName: 'CSV', actionIcon: '/static/images/dashboard/actions/file.png' },
@@ -35,7 +39,7 @@ const useStyles = makeStyles({
     flexGrow: 1,
   },
 });
-const StyledTableRow = withStyles(theme => ({
+const StyledTableRow = withStyles(() => ({
   root: {
     '&:nth-of-type(odd)': {
       backgroundColor: 'white',
@@ -43,13 +47,13 @@ const StyledTableRow = withStyles(theme => ({
   },
 }))(TableRow);
 
-const StyledTableHead = withStyles(theme => ({
+const StyledTableHead = withStyles(() => ({
   root: {
     backgroundColor: '#F1F1F4',
   },
 }))(TableHead);
 
-const StyledTableHeaderCell = withStyles(theme => ({
+const StyledTableHeaderCell = withStyles(() => ({
   head: {
     //backgroundColor: theme.palette.common.black,
     color: '#556789',
@@ -60,7 +64,7 @@ const StyledTableHeaderCell = withStyles(theme => ({
   },
 }))(TableCell);
 
-const StyledTableCell = withStyles(theme => ({
+const StyledTableCell = withStyles(() => ({
   head: {
     color: '#2B416C',
   },
@@ -79,9 +83,20 @@ const Actiontext = styled('span')`
   color: #7788a3;
 `;
 
-export default function CustomTable({ handleClickOpen }) {
+export default function CustomTable({ handleClickOpen, tableData, setTableData }) {
   // const theme = useTheme();
   const classes = useStyles();
+  const [isOpen, setIsOpen] = useState([false, false, false]);
+
+  /**
+   * @description Function to handle Date picker date changes and update Store via dispatching action
+   * @param {Date} date
+   * @param {Number} index
+   */
+  function handleDateChange(date, index) {
+    const seconds = date.getTime();
+    setTableData({ data: seconds, index });
+  }
 
   return (
     <Table className={classes.table} aria-label="customized table">
@@ -94,10 +109,10 @@ export default function CustomTable({ handleClickOpen }) {
         </TableRow>
       </StyledTableHead>
       <TableBody>
-        {tableData.map(row => (
+        {tableData.map((row, index) => (
           <StyledTableRow key={row.name}>
             <StyledTableCell component="th" scope="row">
-              {moment(row.createdOn).format('MMM YYYY, DD')}
+              {moment(new Date(row.createdOn)).format('MMM YYYY, DD')}
               <br />
               <ItalicText>{calculateTimeDiff(row.createdOn)}</ItalicText>
             </StyledTableCell>
@@ -128,25 +143,28 @@ export default function CustomTable({ handleClickOpen }) {
                     key={actionItem.actionName}
                     style={{ margin: '0 30px 0 0', display: 'flex' }}
                     onClick={() => {
-                      // if (actionItem.actionName === 'Schedule Again') {
-                      //   setIsOpen(true);
-                      // }
+                      if (actionItem.actionName === 'Schedule Again') {
+                        let temp = [...isOpen];
+                        temp[index] = true;
+                        setIsOpen(temp);
+                      }
                     }}>
                     <img
                       style={{ height: '24px', width: '18.88px', marginRight: '5px', marginTop: '-3px' }}
                       src={actionItem.actionIcon}></img>
                     <Actiontext>{actionItem.actionName}</Actiontext>
-                    {/* {actionItem.actionName === 'Schedule Again' && isOpen && (
-                    <DatePicker
-                      open={isOpen}
-                      onOpen={() => setIsOpen(true)}
-                      onClose={() => setIsOpen(false)}
-                      variant="inline"
-                      label="Date Picker"
-                      value={selectedDate}
-                      onChange={handleDateChange}
-                    />
-                  )} */}
+                    {actionItem.actionName === 'Schedule Again' && isOpen[index] && (
+                      <DatePicker
+                        selected={new Date(row.createdOn)}
+                        onChange={date => handleDateChange(date, index)}
+                        onClickOutside={() => {
+                          let temp = [...isOpen];
+                          temp[index] = false;
+                          setIsOpen(temp);
+                        }}
+                        open={isOpen[index]}
+                      />
+                    )}
                   </div>
                 ))}
               </div>

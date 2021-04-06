@@ -1,25 +1,19 @@
-import { takeLatest, put, call } from 'redux-saga/effects';
+import { takeLatest, put } from 'redux-saga/effects';
 
-import request from 'utils/request';
+import { setTableData } from './actions';
 
-import { getShowcases } from './actions';
-
-export function* getShowcasesRequest() {
-  const BASE_URL = 'https://us-central1-react-next-boilerplate-cda8b.cloudfunctions.net/getShowcasesData';
-
+export function* setTableDataReq({ payload }) {
   try {
-    yield put(getShowcases.request());
+    yield put(setTableData.request());
 
-    const showcasesdata = yield call(request, BASE_URL);
-
-    yield put(getShowcases.success(showcasesdata));
+    yield put(setTableData.success(payload));
   } catch (err) {
-    yield put(getShowcases.failure(err));
+    yield put(setTableData.failure(err));
   } finally {
-    yield put(getShowcases.fulfill());
+    yield put(setTableData.fulfill());
   }
 }
 
 export default function* dataShowcases() {
-  yield takeLatest(getShowcases.TRIGGER, getShowcasesRequest);
+  yield takeLatest(setTableData.TRIGGER, setTableDataReq);
 }

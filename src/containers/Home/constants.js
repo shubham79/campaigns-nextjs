@@ -1,1 +1,1 @@
-export const GET_SHOWCASES = 'app/Example/GET_SHOWCASES';
+export const SET_TABLEDATA = 'app/Example/SET_TABLEDATA';
