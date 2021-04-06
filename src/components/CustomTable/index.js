@@ -152,7 +152,13 @@ export default function CustomTable({ handleClickOpen, tableData, setTableData }
                     <img
                       style={{ height: '24px', width: '18.88px', marginRight: '5px', marginTop: '-3px' }}
                       src={actionItem.actionIcon}></img>
-                    <Actiontext>{actionItem.actionName}</Actiontext>
+                    {actionItem.actionName === 'Schedule Again' ? (
+                      <CustomLink>
+                        <Actiontext>{actionItem.actionName}</Actiontext>
+                      </CustomLink>
+                    ) : (
+                      <Actiontext>{actionItem.actionName}</Actiontext>
+                    )}
                     {actionItem.actionName === 'Schedule Again' && isOpen[index] && (
                       <DatePicker
                         selected={new Date(row.createdOn)}
