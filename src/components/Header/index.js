@@ -3,10 +3,7 @@ import PropTypes from 'prop-types';
 
 import styled from '@emotion/styled';
 
-import { withTranslation } from 'utils/with-i18next';
-
 import SelectLanguages from './SelectLanguages';
-import CustomLink from './CustomLink';
 
 const HeaderRoot = styled(`header`)`
   left: 0;
@@ -47,16 +44,16 @@ const Logo = styled('div')`
   background: url('/static/images/logo.png');
 `;
 
-export function Header({ t }) {
+export function Header() {
   return (
     <HeaderRoot>
       <HeaderContainer>
         <NavRoot>
           <Logo></Logo>
           <Space />
-          {/* <ListActions>
-            <SelectLanguages t={t} />
-          </ListActions> */}
+          <ListActions>
+            <SelectLanguages />
+          </ListActions>
         </NavRoot>
       </HeaderContainer>
     </HeaderRoot>
@@ -67,4 +64,4 @@ Header.propTypes = {
   t: PropTypes.func,
 };
 
-export default withTranslation('common')(Header);
+export default Header;

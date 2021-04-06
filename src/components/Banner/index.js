@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import styled from '@emotion/styled';
+import { useTranslation } from 'next-i18next';
 
-import { withTranslation } from 'utils/with-i18next';
+// import { withTranslation } from 'utils/with-i18next';
 
 const BannerRoot = styled('div')`
   display: flex;
@@ -20,10 +21,11 @@ const Title = styled('h1')`
   color: #2b416c;
 `;
 
-export function Banner({ t }) {
+export function Banner() {
+  const { t } = useTranslation('banner');
   return (
     <BannerRoot>
-      <Title>{`Manage Campaigns`}</Title>
+      <Title> {t('title')}</Title>
     </BannerRoot>
   );
 }
@@ -32,4 +34,4 @@ Banner.propTypes = {
   t: PropTypes.func,
 };
 
-export default withTranslation('banner')(Banner);
+export default Banner;

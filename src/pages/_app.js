@@ -5,8 +5,9 @@ import Head from 'next/head';
 import App from 'next/app';
 
 import withReduxStore from 'utils/with-redux-store';
-import { appWithTranslation } from 'utils/with-i18next';
+// import { appWithTranslation } from 'utils/with-i18next';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import { appWithTranslation } from 'next-i18next';
 
 import MomentUtils from '@date-io/moment';
 
@@ -32,4 +33,4 @@ class Srr extends App {
   }
 }
 
-export default withReduxStore(Srr);
+export default appWithTranslation(withReduxStore(Srr));
